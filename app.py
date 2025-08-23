@@ -11,10 +11,13 @@ SLACK_BOT_TOKEN = os.getenv("SLACK_BOT_TOKEN")
 # Initializes your app with your bot token and socket mode handler
 app = App(token=SLACK_BOT_TOKEN)
 
-@app.message("hello")
+@app.message()
 def say_hello(message, say):
     # say() sends a message to the channel where the event was triggered
-    say(f"Hi, <@{message['user']}>! This is HelpDesk Chatbot")
+    msg = message.get("text")
+    from bot import ask_bot
+    answer = ask_bot(msg)
+    say(f"{answer}")
 
 def main():
     try:
