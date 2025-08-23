@@ -19,6 +19,14 @@ def say_hello(message, say):
     answer = ask_bot(msg)
     say(f"{answer}")
 
+@app.event("app_mention")
+def handle_mentioned(event, say):
+    msg = event.get("text")
+    from bot import ask_bot
+    answer = ask_bot(msg)
+    say(f"{event['user']}, {answer}")
+
+
 def main():
     try:
         SocketModeHandler(app=app, app_token=SLACK_APP_TOKEN).start()
